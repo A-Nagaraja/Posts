@@ -6,19 +6,27 @@
  */
 
 import { NewAppScreen } from '@react-native/new-app-screen';
-import { StatusBar, StyleSheet, useColorScheme, View } from 'react-native';
+import { StatusBar, StyleSheet, useColorScheme, View,  } from 'react-native';
 import {
   SafeAreaProvider,
   useSafeAreaInsets,
 } from 'react-native-safe-area-context';
+import Posts from './src/Components/Posts/Posts';
+import Headers from './src/Components/Header/AppHeader';
+import { PaperProvider } from 'react-native-paper';
+import { DarkTheme, LightTheme } from './src/Utillity/AppConstant';
+
 
 function App() {
-  const isDarkMode = useColorScheme() === 'dark';
+ const scheme = useColorScheme(); // Detect system light/dark mode
+  const theme = scheme === 'dark' ? DarkTheme : LightTheme;
 
   return (
     <SafeAreaProvider>
-      <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
+      <StatusBar barStyle={DarkTheme ? 'light-content' : 'dark-content'} />
+       <PaperProvider theme={theme}>
       <AppContent />
+      </PaperProvider>
     </SafeAreaProvider>
   );
 }
@@ -28,10 +36,7 @@ function AppContent() {
 
   return (
     <View style={styles.container}>
-      <NewAppScreen
-        templateFileName="App.tsx"
-        safeAreaInsets={safeAreaInsets}
-      />
+     <Posts />
     </View>
   );
 }

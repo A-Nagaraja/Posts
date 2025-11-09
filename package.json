@@ -10,11 +10,16 @@
     "test": "jest"
   },
   "dependencies": {
+    
+    "@react-native-vector-icons/material-design-icons": "^12.4.0",
+    "@react-native/new-app-screen": "0.82.1",
+    "axios": "^1.13.2",
     "react": "19.1.1",
     "react-native": "0.82.1",
-    "@react-native/new-app-screen": "0.82.1",
-    "react-native-safe-area-context": "^5.5.2"
+    "react-native-paper": "^5.14.5",
+    "react-native-safe-area-context": "^5.6.2"
   },
+  
   "devDependencies": {
     "@babel/core": "^7.25.2",
     "@babel/preset-env": "^7.25.3",
@@ -37,5 +42,8 @@
   },
   "engines": {
     "node": ">=20"
+  },
+  "reactNativeVectorIcons": {
+    "fontDir": "src/rnvi-fonts"
   }
 }
