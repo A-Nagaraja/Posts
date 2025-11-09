@@ -1,17 +1,20 @@
-import { View, Text, StyleSheet, Dimensions, FlatList, ActivityIndicator } from 'react-native'
+import { View, Text, StyleSheet, Dimensions, FlatList, ActivityIndicator, TouchableOpacity } from 'react-native'
 import React, { useState, useEffect } from 'react'
+import { useNavigation } from '@react-navigation/native';
 import { useTheme, IconButton} from 'react-native-paper';
 import { AppFont } from '../../Utillity/AppConstant';
 import Header from '../Header/AppHeader';
+import { Screens } from '../../Utillity/Screens';
 
 import { getAllUsers, getAllPosts } from '../../service/userService';
-import { get } from 'react-native/Libraries/TurboModule/TurboModuleRegistry';
+
 
 
 const { width, height } = Dimensions.get('window');
 
 const Posts = () => {
 const { colors } = useTheme(); 
+const navigation = useNavigation();
 
 const [posts, setPosts] = useState<any>([]);
 const [loading, setLoading] = useState(true);
@@ -51,7 +54,7 @@ const fetchData = async () => {
           { backgroundColor: colors.surface, shadowColor: colors.shadow },
         ]}
       >
-        <View style={{ flexDirection: 'row', alignItems: 'center', right: 10  }}>
+        <TouchableOpacity style={{ flexDirection: 'row', alignItems: 'center', right: 10  }} onPress={() => navigation.navigate(Screens.USER_SCREEN, { userId: item.userId })}>
   <IconButton
     icon="account"
     iconColor={colors.primary}
@@ -67,7 +70,7 @@ const fetchData = async () => {
   >
     {item.username}
   </Text>
-</View>
+</TouchableOpacity>
         <Text style={[styles.cardText, { color: colors.onSurface }]}>
           {item.title}
         </Text>
@@ -121,10 +124,6 @@ const styles = StyleSheet.create({
   cardTitle: {
     fontSize: 20,
     fontFamily: AppFont.bold,
-    
-   
-    
-
   },
   cardText: {
     fontSize: 15,
