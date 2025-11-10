@@ -42,20 +42,20 @@ function AppContent() {
   const safeAreaInsets = useSafeAreaInsets();
 
   return (
-    <View style={styles.container}>
-     {/* <Posts /> */}
-     {<UserScreen/>}
-    </View>
-    // <NavigationContainer>
-    //   <Stack.Navigator
-    //   initialRouteName='Posts'
-    //   screenOptions={{headerShown:false}}
-    //   >
-    //     <Stack.Screen name={Screens.POSTS_SCREEN} component={Posts} />
-    //     <Stack.Screen name={Screens.POST_SCREEN} component={PostScreen} />
-    //     <Stack.Screen name={Screens.USER_SCREEN} component={UserScreen} />
-    //   </Stack.Navigator>
-    // </NavigationContainer>
+    // <View style={styles.container}>
+    //  {/* <Posts /> */}
+    //  {/* {<UserScreen/>} */}
+    // </View>
+    <NavigationContainer>
+      <Stack.Navigator
+      initialRouteName='Posts'
+      screenOptions={{headerShown:false}}
+      >
+        <Stack.Screen name={Screens.POSTS_SCREEN} component={Posts} />
+        <Stack.Screen name={Screens.POST_SCREEN} component={PostScreen} />
+        <Stack.Screen name={Screens.USER_SCREEN} component={UserScreen} />
+      </Stack.Navigator>
+    </NavigationContainer>
   );
 }
 

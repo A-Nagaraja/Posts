@@ -39,6 +39,7 @@ const fetchData = async () => {
       });
 
       setPosts(mergedPosts);
+      console.log('Merged Posts:', mergedPosts);
     } catch (error) {
       console.error('API fetch error:', error);
     } finally {
@@ -48,18 +49,25 @@ const fetchData = async () => {
 
   const postsRenderItem = ({ item }: any) => (
     (
-         <View
+         <TouchableOpacity
+        onPress={() => navigation.navigate(Screens.POST_SCREEN, { 
+          userId: item.userId,
+          postId: item.id,
+          title: item.title, 
+          username: item.username
+        })}
         style={[
           styles.card,
           { backgroundColor: colors.surface, shadowColor: colors.shadow },
         ]}
       >
-        <TouchableOpacity style={{ flexDirection: 'row', alignItems: 'center', right: 10  }} onPress={() => navigation.navigate(Screens.USER_SCREEN, { userId: item.userId })}>
+        <View style={{ flexDirection: 'row', alignItems: 'center', right: 10 }} >
+  <TouchableOpacity style={{ flexDirection: 'row', alignItems: 'center' }} onPress={() => navigation.navigate(Screens.USER_SCREEN, { userId: item.userId })}>
   <IconButton
     icon="account"
     iconColor={colors.primary}
     size={20}
-    onPress={() => console.log('Pressed')}
+     onPress={() => navigation.navigate(Screens.USER_SCREEN, {userId: item.userId})}
     style={{ margin: 0, padding: 0 }}
   />
   <Text
@@ -70,11 +78,14 @@ const fetchData = async () => {
   >
     {item.username}
   </Text>
-</TouchableOpacity>
+  </TouchableOpacity>
+</View>
+
         <Text style={[styles.cardText, { color: colors.onSurface }]}>
           {item.title}
         </Text>
-      </View>
+        
+      </TouchableOpacity>
       )
   )
 
