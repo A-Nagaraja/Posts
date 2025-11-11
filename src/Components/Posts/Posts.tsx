@@ -1,10 +1,11 @@
-import { View, Text, StyleSheet, Dimensions, FlatList, ActivityIndicator, TouchableOpacity } from 'react-native'
+import { View, Text, StyleSheet, Dimensions, LayoutAnimation, UIManager, FlatList, ActivityIndicator, TouchableOpacity, TextInput } from 'react-native'
 import React, { useState, useEffect } from 'react'
 import { useNavigation } from '@react-navigation/native';
-import { useTheme, IconButton} from 'react-native-paper';
+import { useTheme, IconButton, Button} from 'react-native-paper';
 import { AppFont } from '../../Utillity/AppConstant';
 import Header from '../Header/AppHeader';
 import { Screens } from '../../Utillity/Screens';
+
 
 import { getAllUsers, getAllPosts } from '../../service/userService';
 
@@ -18,6 +19,10 @@ const navigation = useNavigation();
 
 const [posts, setPosts] = useState<any>([]);
 const [loading, setLoading] = useState(true);
+
+const [openSearch, setOpenSearch] = useState<boolean>(false);
+const [searchText, setSearchText] = useState('');
+const [filteredPosts, setFilteredPosts] = useState<any>([]);
 
 
     useEffect(() => {
@@ -39,6 +44,7 @@ const fetchData = async () => {
       });
 
       setPosts(mergedPosts);
+      setFilteredPosts(mergedPosts);
       console.log('Merged Posts:', mergedPosts);
     } catch (error) {
       console.error('API fetch error:', error);
@@ -89,6 +95,31 @@ const fetchData = async () => {
       )
   )
 
+  const handleIconPress = React.useCallback(() => {
+    LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
+    setOpenSearch(prev => !prev);
+    if (openSearch) {
+      setSearchText('');
+      setFilteredPosts(posts);
+    }
+}, []);
+
+const handleSearchChange = (text: string) => {
+  setSearchText(text);
+
+  if (text.trim().length === 0) {
+
+    setFilteredPosts(posts);
+  } else {
+    const filtered = posts.filter((item: any) =>
+      item.title.toLowerCase().includes(text.toLowerCase()) ||
+      item.username?.toLowerCase().includes(text.toLowerCase())
+    );
+    setFilteredPosts(filtered);
+  }
+};
+
+
 
     if(loading){
         return(
@@ -99,11 +130,18 @@ const fetchData = async () => {
     }
   return (
     <View style={[styles.container, { backgroundColor: colors.primaryContainer }]}>
-      <Header title="Posts" />
+      <Header title="Posts" rightIcon={true} iconName={openSearch ? "magnify-close" : "magnify"} onRightIconPress={handleIconPress}/>
+      
+      {openSearch &&(
+<View style={{width: width-30, height: 50, marginTop: 10, alignSelf:'center', borderRadius: 20, flexDirection:'row', alignItems:'center', paddingHorizontal:10, borderWidth:1, borderColor: colors.primary, marginBottom:10, }}>
+    <TextInput placeholder='Search Posts' style={{flex:1, fontSize:16}} autoFocus={true} value={searchText} onChangeText={handleSearchChange}/>
+      </View>
+      )}
+      
       <FlatList
-      data = {posts}
+      data = {filteredPosts}
       keyExtractor={(item) => item.id.toString()}
-      contentContainerStyle={{ padding: 16 }}
+      contentContainerStyle={{ padding: 0, paddingBottom: 20 }}
       renderItem={postsRenderItem}
       />
     </View>

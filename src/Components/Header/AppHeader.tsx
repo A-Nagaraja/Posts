@@ -1,13 +1,17 @@
 import React, { Component } from 'react';
-import { Text, View, StyleSheet } from 'react-native';
-import { useTheme } from 'react-native-paper';
+import { Text, View, StyleSheet, Button } from 'react-native';
+import { useTheme,IconButton, Icon } from 'react-native-paper';
 import { AppFont } from '../../Utillity/AppConstant';
+
 
 interface HeaderProps {
   title: string;
+  iconName?: string;
+  rightIcon?: boolean;
+  onRightIconPress?: () => void;
 }
 
-const AppHeader: React.FC<HeaderProps> = ({ title }) => {
+const AppHeader: React.FC<HeaderProps> = ({ title, rightIcon, onRightIconPress,iconName }) => {
   const { colors } = useTheme();
 
   return (
@@ -16,12 +20,20 @@ const AppHeader: React.FC<HeaderProps> = ({ title }) => {
         <Text style={[styles.headerTitle, { color: colors.onPrimary }]}>
           {title}
         </Text>
+        {rightIcon && (<View style={{ position: 'absolute', right: 20 }}>
+<IconButton  
+    icon={iconName || "magnify"}
+    iconColor={colors.onPrimary}
+    size={25}
+    onPress={onRightIconPress}
+    style={{ margin: 0, padding: 0 }} />
+        </View>)}
       </View>
     </View>
   );
 };
 
-export default AppHeader;
+export default React.memo(AppHeader);
 
 const styles = StyleSheet.create({
   headerMain: {
