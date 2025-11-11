@@ -107,3 +107,4 @@ To learn more about React Native, take a look at the following resources:
 5. npx react-native start 
 or 
 npx react-native start --reset-cache
+6. node version : 20.17.0
