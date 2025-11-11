@@ -2,7 +2,7 @@ import { StyleSheet, Text, View, Dimensions } from 'react-native'
 import React from 'react'
 import MaterialDesignIcons from '@react-native-vector-icons/material-design-icons'
 import { useTheme } from 'react-native-paper';
-import { AppFont } from '../../Utillity/AppConstant';
+import { AppFont } from '../../utils/AppConstant';
 
 const { width, height } = Dimensions.get('window');
 

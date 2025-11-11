@@ -1,13 +1,14 @@
 import React, { use, useEffect, useState} from 'react'
 import { View, Text, StyleSheet, Dimensions, FlatList, ActivityIndicator } from 'react-native';
 import { IconButton, useTheme} from 'react-native-paper';
-import Header from '../Header/AppHeader';
-import { AppFont } from '../../Utillity/AppConstant';
+import Header from '../../components/Header/AppHeader';
+import { AppFont } from '../../utils/AppConstant';
 import UserInfoRow from '../UserScreen/UserInfoRow';
-import { getAllComments } from '../../service/userService';
+import { getAllComments } from '../../services/commentsService';
 import { MaterialDesignIcons} from '@react-native-vector-icons/material-design-icons';
 import CommentInfo from './CommentInfo';
 import { useRoute, RouteProp, useNavigation } from '@react-navigation/native';
+import Loader from '../../components/Common/Loader';
 
 
 const { width, height } = Dimensions.get('window');
@@ -68,9 +69,7 @@ const route = useRoute<RouteProp<RouteParams, 'Post'>>();
 
   if(loading){
            return(
-               <View style={styles.loader}>
-                  <ActivityIndicator size="large" color = {colors.primary} />
-               </View>
+              <Loader />
            )
        }
  

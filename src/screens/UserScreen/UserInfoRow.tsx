@@ -2,7 +2,7 @@ import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import { MaterialDesignIcons} from '@react-native-vector-icons/material-design-icons';
 import { useTheme } from 'react-native-paper';
-import { AppFont } from '../../Utillity/AppConstant'; // optional, if you have custom fonts
+import { AppFont } from '../../utils/AppConstant'; // optional, if you have custom fonts
 
 interface InfoRowProps {
   icon: string;

@@ -2,12 +2,13 @@ import { View, Text, StyleSheet, TouchableOpacity, Dimensions, ActivityIndicator
 import React, { useEffect, useState } from 'react'
 import { useTheme} from 'react-native-paper';
 import { MaterialDesignIcons} from '@react-native-vector-icons/material-design-icons';
-import { getAllUsers } from '../../service/userService';
+import { getAllUsers } from '../../services/userService';
 import { useRoute, RouteProp, useNavigation } from '@react-navigation/native';
-import Header from '../Header/AppHeader';
-import { Screens } from '../../Utillity/Screens';
-import { AppFont } from '../../Utillity/AppConstant';
+import Header from '../../components/Header/AppHeader';
+import { Screens } from '../../utils/Screens';
+import { AppFont } from '../../utils/AppConstant';
 import UserInfoRow from './UserInfoRow';
+import Loader from '../../components/Common/Loader';
 
 
 const { width, height } = Dimensions.get('window');
@@ -45,9 +46,7 @@ const UserScreen = () => {
 
    if(loading){
           return(
-              <View style={styles.loader}>
-                 <ActivityIndicator size="large" color = {colors.primary} />
-              </View>
+              <Loader />
           )
       }
 

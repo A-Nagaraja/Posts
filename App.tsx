@@ -13,13 +13,19 @@ import {
 } from 'react-native-safe-area-context';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import Posts from './src/Components/Posts/Posts';
-import Headers from './src/Components/Header/AppHeader';
+import Posts from './src/screens/Posts/Posts';
+import Headers from './src/components/Header/AppHeader';
 import { PaperProvider } from 'react-native-paper';
-import { DarkTheme, LightTheme } from './src/Utillity/AppConstant';
-import PostScreen from './src/Components/PostScreen/PostScreen';
-import UserScreen from './src/Components/UserScreen/UserScreen';
-import { Screens } from './src/Utillity/Screens';
+import { DarkTheme, LightTheme } from './src/utils/AppConstant';
+import PostScreen from './src/screens/PostScreen/PostDetailScreen';
+import UserScreen from './src/screens/UserScreen/UserScreen';
+import { Screens } from './src/utils/Screens';
+import { fetchPosts } from './src/store/postsSlice';
+import {fetchUsers} from './src/store/usersSlice';
+import { Provider } from 'react-redux';
+import { store } from './src/store/index';
+import { useEffect } from 'react';
+
 
 
 const Stack = createNativeStackNavigator();
@@ -28,12 +34,19 @@ function App() {
  const scheme = useColorScheme(); // Detect system light/dark mode
   const theme = scheme === 'dark' ? DarkTheme : LightTheme;
 
+  useEffect(() => {
+    store.dispatch(fetchPosts());
+    store.dispatch(fetchUsers());
+  }, []);
+
   return (
     <SafeAreaProvider>
       <StatusBar barStyle={DarkTheme ? 'light-content' : 'dark-content'} />
+      <Provider store={store}>
        <PaperProvider theme={theme}>
       <AppContent />
       </PaperProvider>
+      </Provider>
     </SafeAreaProvider>
   );
 }

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Text, View, StyleSheet, Button } from 'react-native';
 import { useTheme,IconButton, Icon } from 'react-native-paper';
-import { AppFont } from '../../Utillity/AppConstant';
+import { AppFont } from '../../utils/AppConstant';
 
 
 interface HeaderProps {

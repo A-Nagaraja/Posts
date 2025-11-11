@@ -2,12 +2,13 @@ import { View, Text, StyleSheet, Dimensions, LayoutAnimation, UIManager, FlatLis
 import React, { useState, useEffect } from 'react'
 import { useNavigation } from '@react-navigation/native';
 import { useTheme, IconButton, Button} from 'react-native-paper';
-import { AppFont } from '../../Utillity/AppConstant';
-import Header from '../Header/AppHeader';
-import { Screens } from '../../Utillity/Screens';
+import { AppFont } from '../../utils/AppConstant';
+import Header from '../../components/Header/AppHeader';
+import { Screens } from '../../utils/Screens';
+import Loader from '../../components/Common/Loader';
 
-
-import { getAllUsers, getAllPosts } from '../../service/userService';
+import { getAllUsers } from '../../services/userService';
+import { getAllPosts } from '../../services/postsService';
 
 
 
@@ -102,7 +103,7 @@ const fetchData = async () => {
       setSearchText('');
       setFilteredPosts(posts);
     }
-}, []);
+}, [posts, openSearch]);
 
 const handleSearchChange = (text: string) => {
   setSearchText(text);
@@ -123,9 +124,7 @@ const handleSearchChange = (text: string) => {
 
     if(loading){
         return(
-            <View style={styles.loader}>
-               <ActivityIndicator size="large" color = {colors.primary} />
-            </View>
+          <Loader />
         )
     }
   return (
